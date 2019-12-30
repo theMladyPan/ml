@@ -1,0 +1,119 @@
+backend: tensorflow
+class_name: Sequential
+config:
+  build_input_shape: !!python/tuple
+  - null
+  - 6
+  layers:
+  - class_name: Dense
+    config:
+      activation: tanh
+      activity_regularizer: null
+      bias_constraint: null
+      bias_initializer:
+        class_name: Zeros
+        config:
+          dtype: float32
+      bias_regularizer: null
+      dtype: float32
+      kernel_constraint: null
+      kernel_initializer:
+        class_name: GlorotUniform
+        config:
+          dtype: float32
+          seed: null
+      kernel_regularizer: null
+      name: dense
+      trainable: true
+      units: 7
+      use_bias: true
+  - class_name: Dense
+    config:
+      activation: tanh
+      activity_regularizer: null
+      bias_constraint: null
+      bias_initializer:
+        class_name: Zeros
+        config:
+          dtype: float32
+      bias_regularizer: null
+      dtype: float32
+      kernel_constraint: null
+      kernel_initializer:
+        class_name: GlorotUniform
+        config:
+          dtype: float32
+          seed: null
+      kernel_regularizer: null
+      name: dense_1
+      trainable: true
+      units: 29
+      use_bias: true
+  - class_name: Dense
+    config:
+      activation: tanh
+      activity_regularizer: null
+      bias_constraint: null
+      bias_initializer:
+        class_name: Zeros
+        config:
+          dtype: float32
+      bias_regularizer: null
+      dtype: float32
+      kernel_constraint: null
+      kernel_initializer:
+        class_name: GlorotUniform
+        config:
+          dtype: float32
+          seed: null
+      kernel_regularizer: null
+      name: dense_2
+      trainable: true
+      units: 14
+      use_bias: true
+  - class_name: Dense
+    config:
+      activation: tanh
+      activity_regularizer: null
+      bias_constraint: null
+      bias_initializer:
+        class_name: Zeros
+        config:
+          dtype: float32
+      bias_regularizer: null
+      dtype: float32
+      kernel_constraint: null
+      kernel_initializer:
+        class_name: GlorotUniform
+        config:
+          dtype: float32
+          seed: null
+      kernel_regularizer: null
+      name: dense_3
+      trainable: true
+      units: 3
+      use_bias: true
+  - class_name: Dense
+    config:
+      activation: sigmoid
+      activity_regularizer: null
+      bias_constraint: null
+      bias_initializer:
+        class_name: Zeros
+        config:
+          dtype: float32
+      bias_regularizer: null
+      dtype: float32
+      kernel_constraint: null
+      kernel_initializer:
+        class_name: GlorotUniform
+        config:
+          dtype: float32
+          seed: null
+      kernel_regularizer: null
+      name: dense_4
+      trainable: true
+      units: 1
+      use_bias: true
+  name: sequential
+keras_version: 2.2.4-tf
