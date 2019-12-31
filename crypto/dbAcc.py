@@ -4,13 +4,9 @@ from numpy import genfromtxt
 import tensorflow as tf
 import numpy as np
 import pymongo
-import requests
-import io
 import matplotlib.pyplot as plt
 import getpass
-import pprint
-
-print = pprint.pprint
+from pprint import pprint
 
 
 def isIndice(ticker: dict):
@@ -24,6 +20,7 @@ isHome = "y"  # input("Doma? (y/n):")
 uname = "stanke"
 ipLocal = "192.168.1.100"
 ipHome = "188.121.161.140"
+regenData = input("Regenerate new dataset? (y/n): ").upper() == "Y"
 
 print("Connecting to database...")
 
@@ -79,16 +76,23 @@ it = col.find()
 
 print(f"Got {lEntries} time steps for {lFutures} futures with {lAttrs} attributes. Parsing data...")
 
-for i in range(lEntries):
-    tick = it.next()
-    for j in range(lFutures):
-        future = tick["tickers"][j]
-        for k in range(lAttrs):
-            history[i][j][k] = future[attrs[k]]
+if regenData:
+    for i in range(lEntries):
+        tick = it.next()
+        for j in range(lFutures):
+            future = tick["tickers"][j]
+            for k in range(lAttrs):
+                history[i][j][k] = future[attrs[k]]
 
-    timeline[i] = tick["_id"]
+        timeline[i] = tick["_id"]
 
-print(f"Data size: {memoryview(history).nbytes/2**20}MiB")
+    np.save("data/history", history)
+    np.save("data/timeline", timeline)
+else:
+    history = np.load("data/history.npy")
+    timeline = np.load("data/timeline.npy")
+
+print(f"RAM footprint: {memoryview(history).nbytes/2**20}MiB")
 
 fig, axs = plt.subplots(int(np.ceil(lAttrs/2)), 2, sharex=True)
 # Remove horizontal space between axes
@@ -98,7 +102,8 @@ fig.suptitle(symbols[0])
 
 for i in range(lAttrs):
     # axs[int(i/2)][int(i%2)].set_title(attrs[i])
-    axs[int(i/2)][int(i%2)].set_ylabel(attrs[i])
-    axs[int(i/2)][int(i%2)].plot(timeline, history[:, 0, i])
-#plt.legend()
+    axs[int(i / 2)][int(i % 2)].set_ylabel(attrs[i])
+    axs[int(i / 2)][int(i % 2)].plot(timeline, history[:, 0, i])
+
+# plt.legend()
 plt.show()
