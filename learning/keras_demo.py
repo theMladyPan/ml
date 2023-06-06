@@ -18,18 +18,17 @@ y_train = x_train * .2
 xtst = np.random.random((10, 1))
 ytst = xtst * .2
 
-velkyArray = np.array((
-        [[float(random.choice(range(48, 58))) for i in range(10)] for i in range(100)]
-    ))
+velkyArray = np.array(
+    [
+        [float(random.choice(range(48, 58))) for _ in range(10)]
+        for _ in range(100)
+    ]
+)
 mensiArray = velkyArray[:10]
 
-velkyTrain = np.array((
-        [(sum([j for j in i])-48*10)/100 for i in velkyArray]
-    ))
+velkyTrain = np.array([(sum(list(i)) - 48*10) / 100 for i in velkyArray])
 
-mensiTrain = np.array((
-        [(sum([j for j in i])-48*10)/100 for i in mensiArray]
-    ))
+mensiTrain = np.array([(sum(list(i)) - 48*10) / 100 for i in mensiArray])
 
 model = tf.keras.models.Sequential([
   # tf.keras.layers.Flatten(input_shape=(1000, 1)),

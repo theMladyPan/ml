@@ -55,8 +55,7 @@ def deprocess_image(x):
     x /= 2.
     x += 0.5
     x *= 255.
-    x = np.clip(x, 0, 255).astype('uint8')
-    return x
+    return np.clip(x, 0, 255).astype('uint8')
 
 K.set_learning_phase(0)
 
@@ -75,7 +74,7 @@ loss = K.variable(0.)
 for layer_name in settings['features']:
     # Add the L2 norm of the features of a layer to the loss.
     if layer_name not in layer_dict:
-        raise ValueError('Layer ' + layer_name + ' not found in model.')
+        raise ValueError(f'Layer {layer_name} not found in model.')
     coeff = settings['features'][layer_name]
     x = layer_dict[layer_name].output
     # We avoid border artifacts by only involving non-border pixels in the loss.
@@ -145,6 +144,7 @@ and compare the result to the (resized) original image.
 """
 
 
+
 # Playing with these hyperparameters will also allow you to achieve new effects
 step = 0.01  # Gradient ascent step size
 num_octave = 3  # Number of scales at which to run gradient ascent
@@ -159,7 +159,7 @@ else:
     original_shape = img.shape[1:3]
 successive_shapes = [original_shape]
 for i in range(1, num_octave):
-    shape = tuple([int(dim / (octave_scale ** i)) for dim in original_shape])
+    shape = tuple(int(dim / (octave_scale ** i)) for dim in original_shape)
     successive_shapes.append(shape)
 successive_shapes = successive_shapes[::-1]
 original_img = np.copy(img)
@@ -179,4 +179,4 @@ for shape in successive_shapes:
     img += lost_detail
     shrunk_original_img = resize_img(original_img, shape)
 
-save_img(result_prefix + '.png', deprocess_image(np.copy(img)))
+save_img(f'{result_prefix}.png', deprocess_image(np.copy(img)))
