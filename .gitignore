@@ -1,3 +1,7 @@
+.history
+mosty/data
+mosty/logs
+
 *.h5
 *.hdf5
 *.csv
