@@ -69,18 +69,20 @@ model = models.Sequential()
 
 # Add the input layer with two features: time_sine, time_cosine and temperature difference
 model.add(layers.Input(shape=(2)))  # Allow for variable-length sequences
-model.add(layers.Dense(512, activation='relu'))
+model.add(layers.Dense(256, activation='relu'))
 model.add(layers.Dense(1024, activation='relu'))
-model.add(layers.Dense(2048, activation='relu'))
+model.add(layers.Dense(4096, activation='relu'))
+model.add(layers.Dense(2**14, activation='relu'))
+model.add(layers.Dense(4096, activation='relu'))
 model.add(layers.Dense(1024, activation='relu'))
-model.add(layers.Dense(512, activation='relu'))
+model.add(layers.Dense(256, activation='relu'))
 
 # Add the output layer with one neuron to predict length difference
 model.add(layers.Dense(1, activation='linear'))
 
 # Compile the model
 model.compile(
-    optimizer=Adam(learning_rate=0.0003),
+    optimizer=Adam(learning_rate=0.001),
     loss='mean_squared_error'
 )
 
@@ -91,7 +93,7 @@ model.summary()
 early_stopping = EarlyStopping(
     monitor='loss',
     min_delta=0.0,
-    patience=100,
+    patience=50,
     mode='min',
     verbose=1,
     restore_best_weights=True,
@@ -102,8 +104,8 @@ early_stopping = EarlyStopping(
 history = model.fit(
     X_train,
     y_train,
-    epochs=1000,
-    batch_size=32,
+    epochs=200,
+    batch_size=128,
     callbacks=[early_stopping],
     validation_split=0.1,
 )
