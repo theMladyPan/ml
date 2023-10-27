@@ -6,9 +6,7 @@ import numpy as np
 
 # sigmoid function
 def nonlin(x, deriv=False):
-    if(deriv):
-        return x*(1-x)
-    return 1/(1+np.exp(-x))
+    return x*(1-x) if deriv else 1/(1+np.exp(-x))
 
 
 X = np.array([[1, 1],
@@ -26,8 +24,7 @@ np.random.seed(1)
 # initialize weights randomly with mean 0
 syn0 = 2*np.random.random((2,  1)) - 1
 
-for iter in range(10000):
-
+for _ in range(10000):
     # forward propagation
     l0 = X
     l1 = nonlin(np.dot(l0, syn0))

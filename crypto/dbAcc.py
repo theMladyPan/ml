@@ -10,9 +10,7 @@ from pprint import pprint
 
 
 def isIndice(ticker: dict):
-    if ticker.get("tag"):
-        return False
-    return True
+    return not ticker.get("tag")
 
 
 pwd = "891563"  # getpass.getpass("Pass:")

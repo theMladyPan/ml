@@ -11,7 +11,9 @@ import matplotlib.pyplot as plt
 
 def parseData(raw: np.ndarray, forward: int = 1):
     lg = len(raw)
-    [velocity, acc, prev, current, amount, timeStamp, next] = [np.ndarray((lg, 1)) for i in range(7)]
+    [velocity, acc, prev, current, amount, timeStamp, next] = [
+        np.ndarray((lg, 1)) for _ in range(7)
+    ]
     columns = [velocity, acc, prev, current, amount, timeStamp, next]
     ratios = [-1, -2, -4, -4, -1, -10, -4]
 
